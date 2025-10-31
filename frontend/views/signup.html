@@ -10,125 +10,12 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
       rel="stylesheet"
     />
-    <style>
-      :root {
-        color-scheme: dark;
-        --bg: #0d1016;
-        --card: rgba(255, 255, 255, 0.07);
-        --accent: #fcbf49;
-        --text: #f5f3f0;
-        --error: #ff6b6b;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        margin: 0;
-        font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont,
-          "Segoe UI", sans-serif;
-        background: radial-gradient(circle at top left, #1d2533, var(--bg));
-        color: var(--text);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem;
-      }
-
-      main {
-        background: var(--card);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 18px;
-        padding: 2.75rem;
-        width: min(460px, 100%);
-        backdrop-filter: blur(18px);
-        box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35);
-      }
-
-      h1 {
-        font-size: clamp(2rem, 2vw + 1rem, 2.6rem);
-        margin-bottom: 0.75rem;
-        font-weight: 600;
-        text-align: center;
-      }
-
-      p {
-        margin: 0 0 2rem;
-        text-align: center;
-        color: rgba(255, 255, 255, 0.75);
-      }
-
-      form {
-        display: grid;
-        gap: 1.1rem;
-      }
-
-      label {
-        display: grid;
-        gap: 0.5rem;
-        text-align: left;
-        font-weight: 600;
-        font-size: 0.95rem;
-      }
-
-      input {
-        padding: 0.85rem 1rem;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        background: rgba(15, 19, 26, 0.85);
-        color: var(--text);
-        font: inherit;
-      }
-
-      button {
-        margin-top: 0.5rem;
-        border: none;
-        border-radius: 999px;
-        padding: 0.85rem 1rem;
-        background: linear-gradient(135deg, var(--accent), #ff9f1c);
-        color: var(--bg);
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: transform 200ms ease, box-shadow 200ms ease;
-      }
-
-      button:hover,
-      button:focus-visible {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 25px rgba(252, 191, 73, 0.3);
-      }
-
-      .status {
-        min-height: 1.25rem;
-        text-align: center;
-        font-size: 0.95rem;
-      }
-
-      .status.error {
-        color: var(--error);
-      }
-
-      .status.success {
-        color: #6be675;
-      }
-
-      .alt {
-        margin-top: 1.5rem;
-        text-align: center;
-      }
-
-      a {
-        color: var(--accent);
-      }
-    </style>
+    <link rel="stylesheet" href="/styles/main.css" />
   </head>
-  <body>
+  <body class="auth auth-signup">
     <main>
       <h1>Create your account</h1>
-      <p>
+      <p class="description">
         Join the community to save favourites, rate pairings, and craft your
         tasting profile.
       </p>
@@ -157,59 +44,14 @@
             autocomplete="new-password"
           />
         </label>
-        <button type="submit">Create account</button>
+        <button type="submit" class="primary">Create account</button>
         <div class="status" id="status"></div>
       </form>
-      <p class="alt">
+      <p class="auth-alt">
         Already registered?
         <a href="/login">Log in</a>
       </p>
     </main>
-    <script>
-      const form = document.getElementById("signup-form");
-      const statusEl = document.getElementById("status");
-
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        statusEl.textContent = "";
-        statusEl.className = "status";
-
-        const formData = new FormData(form);
-        const payload = Object.fromEntries(formData.entries());
-
-        if (payload.password !== payload.confirmPassword) {
-          statusEl.textContent = "Passwords do not match";
-          statusEl.classList.add("error");
-          return;
-        }
-
-        delete payload.confirmPassword;
-
-        try {
-          const response = await fetch("/signup", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-          });
-
-          const result = await response.json();
-
-          if (!response.ok) {
-            throw new Error(result.message || "Unable to create account");
-          }
-
-          localStorage.setItem("authToken", result.token);
-          statusEl.textContent = "Account created! Redirecting...";
-          statusEl.classList.add("success");
-
-          setTimeout(() => {
-            window.location.href = "/";
-          }, 850);
-        } catch (error) {
-          statusEl.textContent = error.message;
-          statusEl.classList.add("error");
-        }
-      });
-    </script>
+    <script src="/scripts/signup.js" defer></script>
   </body>
 </html>

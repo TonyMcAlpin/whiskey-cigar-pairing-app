@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+</head>
+<body>
+  <h2>Welcome to Your Collection</h2>
+  <button onclick="logout()">Logout</button>
+
+  <h3>Add Whiskey</h3>
+  <input id="whiskeyName" placeholder="Name">
+  <input id="whiskeyType" placeholder="Type">
+  <input id="whiskeyNotes" placeholder="Notes">
+  <button onclick="addWhiskey()">Add</button>
+
+  <h3>Your Whiskeys</h3>
+  <div id="whiskeyList"></div>
+
+  <h3>Add Cigar</h3>
+  <input id="cigarName" placeholder="Name">
+  <input id="cigarStrength" placeholder="Strength">
+  <input id="cigarFlavor" placeholder="Flavor">
+  <button onclick="addCigar()">Add</button>
+
+  <h3>Your Cigars</h3>
+  <div id="cigarList"></div>
+
+  <script src="../scripts/dashboard.js"></script>
+</body>
+</html>

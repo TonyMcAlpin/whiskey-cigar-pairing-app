@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Collection | Whiskey &amp; Cigar Pairings</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/main.css" />
+  </head>
+  <body class="collection">
+    <main>
+      <header>
+        <h1>Your Curated Collection</h1>
+        <p class="description">
+          Toggle between your whiskey library and cigar humidor to review tasting
+          notes, aging details, and perfect pairing suggestions.
+        </p>
+        <div class="view-toggle" role="group" aria-label="Collection type">
+          <button type="button" id="toggle-whiskey" aria-pressed="true">
+            Whiskey
+          </button>
+          <button type="button" id="toggle-cigar" aria-pressed="false">
+            Cigars
+          </button>
+        </div>
+      </header>
+
+      <section
+        class="collection-grid"
+        id="collection-grid"
+        aria-live="polite"
+        aria-busy="false"
+      ></section>
+
+      <div class="actions">
+        <span id="collection-count">0 items</span>
+        <a class="button" href="/">Back to home</a>
+      </div>
+    </main>
+    <script src="/scripts/collection.js" defer></script>
+  </body>
+</html>
