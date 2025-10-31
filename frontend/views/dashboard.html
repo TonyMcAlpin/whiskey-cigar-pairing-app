@@ -1,31 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Dashboard</title>
-</head>
-<body>
-  <h2>Welcome to Your Collection</h2>
-  <button onclick="logout()">Logout</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard • Whiskey & Cigar Pairings</title>
 
-  <h3>Add Whiskey</h3>
-  <input id="whiskeyName" placeholder="Name">
-  <input id="whiskeyType" placeholder="Type">
-  <input id="whiskeyNotes" placeholder="Notes">
-  <button onclick="addWhiskey()">Add</button>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
 
-  <h3>Your Whiskeys</h3>
-  <div id="whiskeyList"></div>
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
 
-  <h3>Add Cigar</h3>
-  <input id="cigarName" placeholder="Name">
-  <input id="cigarStrength" placeholder="Strength">
-  <input id="cigarFlavor" placeholder="Flavor">
-  <button onclick="addCigar()">Add</button>
+  <body class="dashboard">
+    <header>
+      <h1>Welcome to Your Collection</h1>
+      <button id="logout-btn" class="secondary">Logout</button>
+    </header>
 
-  <h3>Your Cigars</h3>
-  <div id="cigarList"></div>
+    <main>
+      <section class="collection-section">
+        <h2>Whiskeys</h2>
 
-  <script src="../scripts/dashboard.js"></script>
-</body>
+        <form id="whiskey-form">
+          <input type="text" id="whiskeyName" placeholder="Name" required />
+          <input type="text" id="whiskeyType" placeholder="Type" />
+          <input type="text" id="whiskeyNotes" placeholder="Notes" />
+          <button type="submit" class="primary">Add Whiskey</button>
+        </form>
+
+        <div id="whiskeyList" class="item-list"></div>
+      </section>
+
+      <section class="collection-section">
+        <h2>Cigars</h2>
+
+        <form id="cigar-form">
+          <input type="text" id="cigarName" placeholder="Name" required />
+          <input type="text" id="cigarStrength" placeholder="Strength" />
+          <input type="text" id="cigarFlavor" placeholder="Flavor" />
+          <button type="submit" class="primary">Add Cigar</button>
+        </form>
+
+        <div id="cigarList" class="item-list"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Whiskey & Cigar Pairings</p>
+    </footer>
+
+    <!-- Dashboard JS -->
+    <script src="../scripts/dashboard.js" defer></script>
+  </body>
 </html>

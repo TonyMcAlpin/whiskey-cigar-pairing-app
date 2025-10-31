@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign up • Whiskey &amp; Cigar Pairings</title>
+    <title>Sign up • Whiskey & Cigar Pairings</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="../styles/main.css" />
   </head>
   <body class="auth auth-signup">
     <main>
@@ -19,39 +19,55 @@
         Join the community to save favourites, rate pairings, and craft your
         tasting profile.
       </p>
-      <form id="signup-form">
+
+      <!-- ✅ Updated form ID and input IDs -->
+      <form id="signupForm">
         <label>
           Email
-          <input type="email" name="email" required autocomplete="email" />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            autocomplete="email"
+          />
         </label>
+
         <label>
           Password
           <input
             type="password"
+            id="password"
             name="password"
             minlength="8"
             required
             autocomplete="new-password"
           />
         </label>
+
         <label>
-          Confirm password
+          Confirm Password
           <input
             type="password"
+            id="confirmPassword"
             name="confirmPassword"
             minlength="8"
             required
             autocomplete="new-password"
           />
         </label>
+
         <button type="submit" class="primary">Create account</button>
         <div class="status" id="status"></div>
       </form>
+
       <p class="auth-alt">
         Already registered?
-        <a href="/login">Log in</a>
+        <a href="login.html">Log in</a>
       </p>
     </main>
-    <script src="/scripts/signup.js" defer></script>
+
+    <!-- ✅ Script loads after DOM, consistent path -->
+    <script src="../scripts/signup.js" defer></script>
   </body>
 </html>
