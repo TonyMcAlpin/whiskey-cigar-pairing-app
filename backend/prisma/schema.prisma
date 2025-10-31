@@ -1,22 +1,35 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-}
-
-model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now())
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./dev.db"
 }
 
+model User {
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
+  password String
+  whiskeys Whiskey[]
+  cigars   Cigar[]
+}
+
+model Whiskey {
+  id        Int      @id @default(autoincrement())
+  name      String
+  type      String?
+  notes     String?
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Cigar {
+  id        Int      @id @default(autoincrement())
+  name      String
+  strength  String?
+  flavor    String?
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+}
