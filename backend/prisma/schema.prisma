@@ -9,27 +9,27 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  email    String    @unique
-  password String
-  whiskeys Whiskey[]
-  cigars   Cigar[]
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  password  String
+  whiskeys  Whiskey[]
+  cigars    Cigar[]
 }
 
 model Whiskey {
-  id        Int      @id @default(autoincrement())
-  name      String
-  type      String?
-  notes     String?
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  id       Int      @id @default(autoincrement())
+  name     String
+  type     String?
+  notes    String?
+  userId   Int
+  user     User     @relation(fields: [userId], references: [id])
 }
 
 model Cigar {
-  id        Int      @id @default(autoincrement())
-  name      String
-  strength  String?
-  flavor    String?
-  userId    Int
-  user      User     @relation(fields: [userId], references: [id])
+  id       Int      @id @default(autoincrement())
+  name     String
+  strength String?
+  flavor   String?
+  userId   Int
+  user     User     @relation(fields: [userId], references: [id])
 }

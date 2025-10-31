@@ -1,10 +1,13 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { PrismaClient } from "@prisma/client";
+import fetch from "node-fetch";
+import { PrismaClient } from "./generated/prisma/index.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { authenticateToken } from "../middleware/auth.js";
+import pairingRoutes from "./routes/pairing.js";
+
 
 dotenv.config();
 const app = express();
@@ -12,8 +15,12 @@ const prisma = new PrismaClient();
 
 app.use(cors());
 app.use(express.json());
+app.use("/api", pairingRoutes);
 
-// --- AUTH ROUTES ---
+
+/* ==========================
+   AUTH ROUTES
+========================== */
 
 // Signup
 app.post("/signup", async (req, res) => {
@@ -73,7 +80,9 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// --- WHISKEY ROUTES ---
+/* ==========================
+   WHISKEY ROUTES
+========================== */
 
 // Get all whiskeys
 app.get("/whiskeys", authenticateToken, async (req, res) => {
@@ -106,7 +115,9 @@ app.post("/whiskeys", authenticateToken, async (req, res) => {
   }
 });
 
-// --- CIGAR ROUTES ---
+/* ==========================
+   CIGAR ROUTES
+========================== */
 
 // Get all cigars
 app.get("/cigars", authenticateToken, async (req, res) => {
@@ -139,31 +150,51 @@ app.post("/cigars", authenticateToken, async (req, res) => {
   }
 });
 
-// --- GLOBAL ERROR HANDLER ---
+/* ==========================
+   SEARCH WHISKEY ROUTE
+========================== */
+
+app.get("/api/search-whiskey", async (req, res) => {
+  const query = req.query.q;
+  console.log("Received search request:", query);
+
+  try {
+    const apiUrl = `https://whiskyhunter.net/api/whisky-search?query=${encodeURIComponent(query)}`;
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      console.error("Whisky Hunter API error:", response.status);
+      return res.status(500).json({ message: "External API error", status: response.status });
+    }
+
+    const data = await response.json();
+    console.log(`Fetched ${data.count || 0} results`);
+    res.json(data.results || []);
+  } catch (error) {
+    console.error("Error fetching whiskey data:", error.message);
+    res.status(500).json({ message: "Error fetching whiskey data", error: error.message });
+  }
+});
+
+
+/* ==========================
+   GLOBAL ERROR & SHUTDOWN HANDLERS
+========================== */
+
 app.use((err, req, res, next) => {
   console.error("Unhandled error:", err.stack);
   res.status(500).json({ message: "Internal Server Error" });
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const authMessage = document.getElementById("auth-message");
-
-  if (!authMessage) return;
-
-  const token = localStorage.getItem("authToken");
-
-  if (token) {
-    authMessage.hidden = false;
-    authMessage.textContent = "You’re logged in — jump back into your collection below.";
-  }
-});
-
-// --- SHUTDOWN HANDLER ---
 process.on("SIGINT", async () => {
   await prisma.$disconnect();
   console.log("🛑 Prisma disconnected, shutting down server...");
   process.exit(0);
 });
+
+/* ==========================
+   START SERVER
+========================== */
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
