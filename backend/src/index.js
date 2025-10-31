@@ -145,6 +145,19 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Internal Server Error" });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const authMessage = document.getElementById("auth-message");
+
+  if (!authMessage) return;
+
+  const token = localStorage.getItem("authToken");
+
+  if (token) {
+    authMessage.hidden = false;
+    authMessage.textContent = "You’re logged in — jump back into your collection below.";
+  }
+});
+
 // --- SHUTDOWN HANDLER ---
 process.on("SIGINT", async () => {
   await prisma.$disconnect();
